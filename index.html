@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#131b3f">
   <title>Grammar Shooter</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
   <div class="stars" aria-hidden="true"></div>
@@ -35,11 +35,11 @@
       <div class="section-heading">
         <div><span class="eyebrow">ВЫБЕРИ МИССИЮ</span><h2>Готовые темы</h2></div>
         <div class="home-menu-actions">
-          <a class="author-button" href="https://vk.ru/english.village.ozery" target="_blank" rel="noopener noreferrer" aria-label="Открыть страницу автора English Village в новой вкладке">
+          <button class="author-button" type="button" data-action="author" aria-label="Открыть страницу автора English Village в новой вкладке">
             <span class="author-button-icon">VK</span>
             <span><small>АВТОР ПРОЕКТА</small>English Village</span>
             <b aria-hidden="true">↗</b>
-          </a>
+          </button>
           <button class="secondary-button" data-action="editor">✦ Редактор тем</button>
         </div>
       </div>
@@ -100,6 +100,6 @@
     <div class="modal-card"><div class="modal-icon">?</div><h2 id="modalTitle">Вы уверены?</h2><p id="modalText"></p><div class="button-row"><button id="modalCancel" class="secondary-button">Отмена</button><button id="modalConfirm" class="danger-button">Да</button></div></div>
   </div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="app.js"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>
