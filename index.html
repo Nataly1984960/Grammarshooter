@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#131b3f">
+  <title>Grammar Shooter</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+  <header class="topbar">
+    <button class="brand" data-action="home" aria-label="На главный экран">
+      <span class="brand-mark">G</span><span>Grammar<br><b>Shooter</b></span>
+    </button>
+    <div class="top-actions">
+      <button id="soundButton" class="icon-button" aria-label="Выключить звук" title="Звук">🔊</button>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1">
+    <section id="homeScreen" class="screen active">
+      <div class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">КОСМИЧЕСКАЯ ГРАММАТИКА</span>
+          <h1>Метко стреляй.<br><span>Правильно выбирай!</span></h1>
+          <p>Уничтожь два неверных ответа и сохрани правильный. У тебя 3 жизни и 10 заданий!</p>
+          <div class="how-to"><span>1</span> Прочитай <i>→</i> <span>2</span> Прицелься <i>→</i> <span>3</span> Стреляй</div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="planet planet-a"></div><div class="planet planet-b"></div>
+          <div class="mascot">🚀<span>ABC</span></div>
+        </div>
+      </div>
+      <div class="section-heading">
+        <div><span class="eyebrow">ВЫБЕРИ МИССИЮ</span><h2>Готовые темы</h2></div>
+        <button class="secondary-button" data-action="editor">✦ Редактор тем</button>
+      </div>
+      <div id="presetTopics" class="topic-grid"></div>
+      <div id="customSection" class="custom-section hidden">
+        <div class="section-heading"><div><span class="eyebrow">СОЗДАНО ТОБОЙ</span><h2>Мои темы</h2></div></div>
+        <div id="customTopics" class="topic-grid"></div>
+      </div>
+    </section>
+
+    <section id="gameScreen" class="screen game-screen">
+      <div class="game-hud">
+        <button class="back-button" data-action="confirm-home">← Выйти</button>
+        <div class="progress-wrap"><div class="progress-label"><span id="gameTopic"></span><b id="gameProgress"></b></div><div class="progress"><i id="progressBar"></i></div></div>
+        <div id="lives" class="lives" aria-label="Жизни"></div>
+      </div>
+      <div class="question-panel">
+        <span class="mission-label">ЗАДАНИЕ</span>
+        <h2 id="sentence" class="sentence"></h2>
+        <p class="instruction">Отстрели два ответа, которые <b>не подходят</b></p>
+      </div>
+      <div id="targets" class="targets" aria-label="Варианты ответа"></div>
+      <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="resultScreen" class="screen result-screen">
+      <div class="result-card">
+        <div id="resultIcon" class="result-icon">🏆</div>
+        <span class="eyebrow">МИССИЯ ЗАВЕРШЕНА</span>
+        <h1 id="resultTitle"></h1><p id="resultText"></p>
+        <div class="stats"><div><b id="statQuestions">0</b><span>заданий</span></div><div><b id="statLives">0</b><span>жизни</span></div><div><b id="statMistakes">0</b><span>ошибок</span></div></div>
+        <div class="button-row"><button class="primary-button" data-action="replay">↻ Ещё раз</button><button class="secondary-button" data-action="home">На главную</button></div>
+      </div>
+    </section>
+
+    <section id="editorScreen" class="screen editor-screen">
+      <div class="editor-header">
+        <div><button class="back-button" data-action="home">← На главную</button><span class="eyebrow">МАСТЕРСКАЯ</span><h1>Редактор тем</h1><p>Создавай свои задания — это просто!</p></div>
+        <div class="button-row"><label class="secondary-button file-button">⇧ Импортировать<input id="importInput" type="file" accept="application/json,.json"></label><button id="newTopicButton" class="primary-button">＋ Новая тема</button></div>
+      </div>
+      <div id="editorListView">
+        <div id="editorTopicList" class="editor-topic-list"></div>
+      </div>
+      <div id="editorFormView" class="editor-form hidden">
+        <div class="form-toolbar"><button id="backToTopics" class="back-button">← Все темы</button><span id="saveStatus" class="save-status">Все изменения сохранены</span></div>
+        <div class="topic-fields card">
+          <label>Название темы <input id="topicTitle" maxlength="45" placeholder="Например: Past Simple"></label>
+          <label>Короткое описание <input id="topicDescription" maxlength="90" placeholder="Что будем тренировать?"></label>
+        </div>
+        <div class="question-header"><div><h2>Вопросы</h2><p id="questionCounter"></p></div><button id="addQuestion" class="secondary-button">＋ Добавить вопрос</button></div>
+        <div id="questionList" class="question-list"></div>
+        <div class="editor-footer"><p id="formError" class="form-error" role="alert"></p><div class="button-row"><button id="saveTopic" class="secondary-button">Сохранить</button><button id="saveAndPlay" class="primary-button">Сохранить и играть</button></div></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card"><div class="modal-icon">?</div><h2 id="modalTitle">Вы уверены?</h2><p id="modalText"></p><div class="button-row"><button id="modalCancel" class="secondary-button">Отмена</button><button id="modalConfirm" class="danger-button">Да</button></div></div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
